@@ -5,12 +5,12 @@ class UserInstrumentsController < ApplicationController
   def index
     @user_instruments = UserInstrument.all
 
-    render json: @user_instruments
+    render json: @user_instruments, include: [:user, :instrument]
   end
 
   # GET /user_instruments/1
   def show
-    render json: @user_instrument
+    render json: @user_instrument, include: [:user, :instrument]
   end
 
   # POST /user_instruments

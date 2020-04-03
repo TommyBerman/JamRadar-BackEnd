@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_113425) do
+ActiveRecord::Schema.define(version: 2020_04_02_234235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(version: 2020_04_02_113425) do
     t.string "hometown"
     t.string "level"
     t.string "goal"
-    t.string "purpose"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "bio"
   end
 
   add_foreign_key "user_genres", "genres"

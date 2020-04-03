@@ -10,14 +10,25 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user ,except: :password_digest , include: [:genres, :instruments]
   end
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    @user = User.new({first_name: params[:firstN], last_name: params[:lastN], password_digest: BCrypt::Password.create(params[:password]),
+       email: params[:email], age: params[:age],
+        gender: params[:gender],
+         hometown: params[:hometown],
+         level: params[:level],
+         goal: params[:goal], bio: params[:bio],
+         })
+    @genres = Genre.find(params[:genres])
+    @instruments = Instrument.find(params[:instruments])
+    
 
     if @user.save
+      @user.genres << @genres
+      @user.instruments << @instruments
       render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity

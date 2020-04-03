@@ -5,12 +5,12 @@ class UserGenresController < ApplicationController
   def index
     @user_genres = UserGenre.all
 
-    render json: @user_genres
+    render json: @user_genres, include: [:user, :genre]
   end
 
   # GET /user_genres/1
   def show
-    render json: @user_genre
+    render json: @user_genre, include: [:user, :genre]
   end
 
   # POST /user_genres
