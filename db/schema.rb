@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_234235) do
+ActiveRecord::Schema.define(version: 2020_04_05_011513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(version: 2020_04_02_234235) do
     t.index ["user_id"], name: "index_user_instruments_on_user_id"
   end
 
+  create_table "user_question_details", force: :cascade do |t|
+    t.string "match_instrument"
+    t.string "match_genre"
+    t.string "match_level"
+    t.string "match_goal"
+    t.integer "min_age"
+    t.integer "max_age"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "hometown"
+    t.index ["user_id"], name: "index_user_question_details_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -64,4 +78,5 @@ ActiveRecord::Schema.define(version: 2020_04_02_234235) do
   add_foreign_key "user_genres", "users"
   add_foreign_key "user_instruments", "instruments"
   add_foreign_key "user_instruments", "users"
+  add_foreign_key "user_question_details", "users"
 end

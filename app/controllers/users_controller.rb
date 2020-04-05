@@ -1,3 +1,5 @@
+require 'byebug'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -25,6 +27,7 @@ class UsersController < ApplicationController
     @genres = Genre.find(params[:genres])
     @instruments = Instrument.find(params[:instruments])
     
+    
 
     if @user.save
       @user.genres << @genres
@@ -48,6 +51,28 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
+
+  def sign_in
+    user = User.find_by(email: params[:email])
+    
+    if user && user.authenticate(params[:password])
+      render json: { email: user.email,
+         token: generate_token(id: user.id),
+
+       }
+    else
+      render json: { error: "email or Password is invalid "}
+    end
+  end
+
+  def validate
+    if get_user
+      render json: { email: get_user.email, token: generate_token(id: get_user.id)}
+    else
+      render json: { error: "You are not authorized" }
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
