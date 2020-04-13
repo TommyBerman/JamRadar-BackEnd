@@ -36,6 +36,7 @@ class UserQuestionDetailsController < ApplicationController
 
   # DELETE /user_question_details/1
   def destroy
+    @user_question_detail = UserQuestionDetail.find_by(user_id: get_user().id)
     @user_question_detail.destroy
   end
 

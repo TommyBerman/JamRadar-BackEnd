@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   post "/sign-in", to: "users#sign_in"
   get "/validate", to: "users#validate"
   post "/sign-up", to: "users#create"
-  
+  get "/candidates", to: "users#candidates"
+  put "/users", to:"users#update"
+  delete "/users", to: "users#destroy"
+  post "/like", to: "users#like"
+  get "/matches", to: "users#matches"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
