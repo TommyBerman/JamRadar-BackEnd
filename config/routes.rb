@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   delete "/users", to: "users#destroy"
   post "/like", to: "users#like"
   get "/matches", to: "users#matches"
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  delete "/matches", to: "users#unmatch"
+  
 end
