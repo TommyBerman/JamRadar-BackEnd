@@ -2,10 +2,9 @@ Rails.application.routes.draw do
   resources :user_question_details, except: :show
   resources :user_instruments
   resources :user_genres
-  resources :users
+  resources :users, except: [:destroy, :create]
   resources :instruments
   resources :genres
-  resources :users , except: :create
 
   post "/sign-in", to: "users#sign_in"
   get "/validate", to: "users#validate"

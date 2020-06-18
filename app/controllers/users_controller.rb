@@ -1,7 +1,7 @@
 require 'byebug'
 
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update]
 
   # GET /users
   def index
@@ -146,6 +146,8 @@ end
   def destroy
     @user = get_user()
     @user.destroy
+
+    render json: { message: "User has been succesfully deleted"}
   end
 
   def sign_in
@@ -177,6 +179,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :password_digest, :email, :age, :gender, :hometown, :level, :goal, :purpose)
+      params.require(:user).permit(:first_name, :last_name, :password_digest, :email, :age, :gender, :hometown, :level, :goal, :purpose, :image)
     end
 end
