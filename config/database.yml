@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: JamRadar_production
-  username: JamRadar
-  password: <%= ENV['JAMRADAR_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
