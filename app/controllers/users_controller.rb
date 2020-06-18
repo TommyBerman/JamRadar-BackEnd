@@ -1,7 +1,7 @@
 require 'byebug'
 
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update]
 
   # GET /users
   def index
@@ -64,17 +64,27 @@ def matches
   render json: @matches ,except: :password_digest , include: [:genres, :instruments]
 end
 
+def unmatch
+  @user = get_user()
+  @matchToDelete= Like.find_by(liked_user:params[:liked_user] , user_id: @user.id )
+  @matchToDelete.destroy
+
+  render json: {}
+  
+end
+
+
 
   # POST /users
   def create
     userParams = {
-      first_name: params[:firstN], last_name: params[:lastN], password_digest: BCrypt::Password.create(params[:password]),
+      first_name: params[:first_name], last_name: params[:last_name], password_digest: BCrypt::Password.create(params[:password]),
       email: params[:email], age: params[:age],
        gender: params[:gender],
         hometown: params[:hometown],
         level: params[:level],
-        goal: params[:goal], bio: params[:bio],
-        image: params[:image]
+        goal: params[:goal], bio: params[:bio], band_name: params[:band_name],
+        image: params[:image], youtube: params[:youtube], instagram: params[:instagram], facebook: params[:facebook]
     }
     if !get_user()
       @user = User.new(userParams)
@@ -103,8 +113,8 @@ end
       gender: params[:gender],
       hometown: params[:hometown],
       level: params[:level],
-      goal: params[:goal], bio: params[:bio],
-      image: params[:image]
+      goal: params[:goal],band_name: params[:band_name], bio: params[:bio],
+      image: params[:image], youtube: params[:youtube], instagram: params[:instagram], facebook: params[:facebook]
     } 
 
     @user = get_user()
@@ -134,8 +144,10 @@ end
 
   # DELETE /users/1
   def destroy
-    @user = User.find(get_user().id)
+    @user = get_user()
     @user.destroy
+
+    render json: { message: "User has been succesfully deleted"}
   end
 
   def sign_in
@@ -167,6 +179,6 @@ end
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :password_digest, :email, :age, :gender, :hometown, :level, :goal, :purpose)
+      params.require(:user).permit(:first_name, :last_name, :password_digest, :email, :age, :gender, :hometown, :level, :goal, :purpose, :image)
     end
 end
